@@ -1,0 +1,57 @@
+.duration-chart {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 15px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+
+.duration-chart h3 {
+    margin: 0 0 10px 0;
+    font-size: 0.95rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.duration-chart svg {
+    display: block;
+}
+
+.duration-chart circle:hover {
+    r: 5;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.duration-tooltip {
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(102, 126, 234, 0.5);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: white;
+    font-size: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.tooltip-year {
+    font-weight: 600;
+    color: #667eea;
+    margin-bottom: 2px;
+}
+
+.tooltip-duration {
+    opacity: 0.9;
+    font-size: 11px;
+}

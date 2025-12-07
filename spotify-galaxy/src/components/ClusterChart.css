@@ -1,0 +1,89 @@
+.cluster-chart {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 380px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+    color: #fff;
+    z-index: 100;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.chart-section {
+    margin-bottom: 20px;
+}
+
+.chart-section:last-child {
+    margin-bottom: 0;
+}
+
+.chart-section h3 {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #8b5cf6;
+    text-transform: uppercase;
+}
+
+.cluster-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+}
+
+.cluster-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.cluster-checkbox input[type="checkbox"] {
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+}
+
+.checkbox-label {
+    font-size: 10px;
+    font-weight: 600;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+}
+
+.cluster-checkbox:hover .checkbox-label {
+    opacity: 0.8;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .cluster-chart {
+        width: 320px;
+        padding: 12px;
+    }
+
+    .chart-section h3 {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cluster-chart {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 100%;
+        margin: 10px;
+        max-width: calc(100% - 20px);
+    }
+}
