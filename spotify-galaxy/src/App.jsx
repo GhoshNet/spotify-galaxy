@@ -25,6 +25,28 @@ function App() {
         song => song.year >= selectedYear[0] && song.year <= selectedYear[1]
     )
 
+    if (data.length === 0) {
+        return (
+            <div className="loading-container" style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100vw',
+                height: '100vh',
+                background: '#000',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: '#fff',
+                zIndex: 9999
+            }}>
+                <h2 style={{ fontFamily: 'Inter, sans-serif', marginBottom: '10px' }}>Loading Visualization</h2>
+                <p style={{ fontFamily: 'Inter, sans-serif', color: '#888' }}>Please wait or Refresh the page</p>
+            </div>
+        )
+    }
+
     return (
         <div style={{ width: '100vw', height: '100vh', background: '#000' }}>
             <Canvas camera={{ position: [0, 0, 50], fov: 75 }}>
