@@ -14,7 +14,8 @@ function App() {
     const [hoveredSong, setHoveredSong] = useState(null)
 
     useEffect(() => {
-        fetch('/galaxy_data.json')
+        // Use BASE_URL to handle Github Pages deployment path
+        fetch(`${import.meta.env.BASE_URL}galaxy_data.json`)
             .then(res => res.json())
             .then(setData)
             .catch(err => console.error('Failed to load data:', err))
