@@ -20,7 +20,7 @@ export default function InfoPanel() {
                 </div>
 
                 <div className="controls-section">
-                    <h3>Each cluster Respresents an audio genre</h3>
+                    <h3>Each cluster Represents an audio genre</h3>
                     {/* <ul>
                         <li>🖱️ <strong>Left Click + Drag:</strong> Rotate View</li>
                         <li>🖱️ <strong>Scroll:</strong> Zoom In / Out</li>
