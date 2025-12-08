@@ -1,0 +1,21 @@
+# System files
+.DS_Store
+._*.
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv
+env/
+venv/
+
+# Node.js (for the web app)
+node_modules/
+dist/
+build/
+.env
+.env.local
+
+# Project specific
+trial_1/
