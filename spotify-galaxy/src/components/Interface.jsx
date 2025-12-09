@@ -1,8 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './Interface.css'
 
 export default function Interface({ yearRange, onYearChange, hoveredSong, totalSongs }) {
     const [minYear, maxYear] = yearRange
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+
+    useEffect(() => {
+        const handleMouseMove = (event) => {
+            setMousePos({
+                x: event.clientX,
+                y: event.clientY
+            })
+        }
+
+        window.addEventListener('mousemove', handleMouseMove)
+
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove)
+        }
+    }, [])
 
     return (
         <div className="interface">
@@ -37,7 +53,13 @@ export default function Interface({ yearRange, onYearChange, hoveredSong, totalS
 
             {/* Song Info */}
             {hoveredSong && (
-                <div className="song-info">
+                <div
+                    className="song-info"
+                    style={{
+                        top: mousePos.y + 15,
+                        left: mousePos.x + 15,
+                    }}
+                >
                     <h3>{hoveredSong.name}</h3>
                     <p>{hoveredSong.artist}</p>
                     <p className="year">{hoveredSong.year}</p>
