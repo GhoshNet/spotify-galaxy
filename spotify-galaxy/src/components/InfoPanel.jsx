@@ -6,10 +6,13 @@ export default function InfoPanel() {
             <h2>Spotify Galaxy</h2>
             <div className="info-content">
                 <p className="description">
+                    Explore how musical styles and audio features evolve over time across genre clusters.
+                </p>
+                <p className="description">
                     An immersive 3D visualization of <strong>19,769 songs</strong> from 1921-2020.
                     Each star represents a track, positioned by its musical characteristics using PCA.
                 </p>
-
+                
                 <div className="legend-section">
                     <h3>Visual Encodings</h3>
                     <ul>
@@ -20,12 +23,12 @@ export default function InfoPanel() {
                 </div>
 
                 <div className="controls-section">
-                    <h3>Each cluster Represents an audio genre</h3>
-                    {/* <ul>
+                    <h3>How to Explore</h3>
+                    <ul>
                         <li>🖱️ <strong>Left Click + Drag:</strong> Rotate View</li>
                         <li>🖱️ <strong>Scroll:</strong> Zoom In / Out</li>
                         <li>🖱️ <strong>Timeline:</strong> Filter by Year</li>
-                    </ul> */}
+                    </ul>
                 </div>
             </div>
         </div>

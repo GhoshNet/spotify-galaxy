@@ -1,13 +1,13 @@
 .info-panel {
     position: fixed;
     left: 20px;
-    top: 20px;
-    width: 280px;
+    top: 10px;
+    width: 310px;
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 15px;
-    padding: 20px;
+    padding: 10px;
     color: white;
     font-family: 'Inter', sans-serif;
     z-index: 1000;
