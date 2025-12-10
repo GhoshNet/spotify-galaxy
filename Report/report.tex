@@ -1,0 +1,161 @@
+\documentclass[a4paper, 10pt]{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath}
+\usepackage{tcolorbox}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{accents}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usepackage{enumitem}
+\setlist{nolistsep}
+
+\usepackage[scaled]{helvet}
+\renewcommand\familydefault{\sfdefault} 
+\usepackage[T1]{fontenc}
+\usepackage{tcolorbox}
+\definecolor{light-blue}{cmyk}{0.24, 0.12, 0.0, 0.04, 1.00}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}%
+
+\titlespacing\section{0pt}{6pt}{0pt}
+\titlespacing\subsection{0pt}{6pt}{0pt}
+\titlespacing\subsubsection{0pt}{0pt}{0pt}
+
+\pagestyle{fancy}
+\setlength{\headheight}{40pt}
+
+\begin{document}
+
+% STUDENT DETAILS
+\lhead{Tanmay Ghosh (25340079)} 
+\rhead{CS7DS4/CSU44056 Assignment 3} 
+\cfoot{\thepage\ of \pageref{LastPage}}
+
+\begin{tcolorbox}[colback=light-blue]
+\begin{small}
+\textbf{DECLARATION:} I understand that this is an \textbf{individual} assessment and that collaboration is not permitted. I have read, understand and agree to abide by the plagiarism provisions in the
+General Regulations of the University Calendar for the current year, found at http://www.tcd.ie/calendar.
+I understand that by returning this declaration with my work, I am agreeing with the above statement. 
+\end{small}
+\end{tcolorbox}
+
+\bigskip
+\Large\textbf{Spotify Galaxy: Visualizing High-Dimensional Music Data} \normalsize
+\bigskip
+
+\section*{Introduction}
+The primary analysis question driving this visualization is: \textit{How have the musical styles and audio features evolved over time across distinct genre clusters?} To answer this, "Spotify Galaxy" presents a multi-view interface which comprises of an immersive \textbf{3D Star Field} which is representing the feature space, coordinated with \textbf{Cluster Distribution}, \textbf{Audio Radar}, and \textbf{Temporal Evolution} charts. The core view can be seen as an interactive 3D star field, songs positioned according to PCA-reduced audio features, where the color encodes the cluster membership. This is interactively linked to auxiliary analytical views including cluster distribution, a temporal duration trend line showing average duration of songs throughout the timeline, and an audio-feature radar chart.
+
+\section{Tools \& Preprocessing}
+
+\subsection{Tools \& Technologies}
+I built this visualization using "ReactJs" and "Three.js" (via \textit{@react-three/fiber}). WebGL was used for high-performance rendering of 20,000+ interactive datapoints. "Python" and it's libraries (pandas, scikit-learn) were used for data preprocessing purposes. The "D3.js" concepts and the "Recharts" were employed for coordinated 2D detail views. 
+\\The interface is a combination of Three.js WebGL scene for the galaxy view. There are standard React UI panels for legends, encodings, instructions toggles, and linked charts. "Recharts" is used to render the bar chart, duration line chart, and the radar plot. All the charts are synchronized with the React state.
+\\This overall application was pushed on github and published publicly on the following link:
+\\\url{https://ghoshnet.github.io/spotify-galaxy/}
+
+\subsection{Preprocessing \& Methodology}
+The raw dataset consists of 169,910 songs. The following preprocessing and data analytics steps were applied:
+\begin{itemize}
+\item \textbf{1. Cleaning}: Filtered for years 1921-2020 and removed duplicates. This resulted in a dataset of approximately ~19,700 songs.
+\item \textbf{2. Normalization}: Numerical features (like tempo, energy, etc.) were scaled using \texttt{StandardScaler} to ensure equal weight during analysis.
+\item \textbf{3. Dimensionality Reduction (PCA)}: I applied the Principal Component Analysis to 12 audio features and reduced them to 3 dimensions (X, Y, Z coordinates), preserving 65\% of variance. Now because of this, approximately 35\% of feature variability is not represented in the 3D scatter plot. Thus, instead of interpreting the distances and cluster boundaries as exact separations, they should be interpreted as approximations.
+\item \textbf{4. Clustering (K-Means):} Songs were grouped into 8 clusters based on their audio profiles to identify distinct genres ($k=8$ determined via elbow method).
+\end{itemize}
+In order for all songs to share the same coordinate system across time, PCA was fitted once globally on the entire dataset, ensuring temporal filtering does not distort spatial layout. This allows users to observe a stable cluster structure across decades. 
+
+\section{Dataset Description}
+The dataset consists of \textbf{19,769 items} spanning in the time range \textbf{1921--2020}.
+\\Dataset Link is as follows:
+\\\url{https://www.kaggle.com/datasets/yamaerenay/spotify-dataset-1921-2020-160k-tracks}
+\begin{itemize}
+    \item \textbf{Data Types}: The data includes \textbf{Ordinal} attributes (Year), \textbf{Quantitative} audio features like: Energy, Valence, Danceability etc., and \textbf{Categorical} derived attributes like "Cluster ID".
+    \item \textbf{High Dimensionality}: The 12+ quantitative audio attributes make standard 2D scatter plots ineffective due to overplotting and inability to capture the full "shape" of the music space.
+    \item \textbf{Derived Attributes}: I derived categorical \textit{Cluster Labels} and numerical \textit{PCA Coordinates} to give a structure to the visualization.
+\end{itemize}
+There is however, a heavy imbalance across decades, with far fewer tracks prior to the 1950s. Thus, interpretation must be done cautiously as it impacts trends in early years. 
+
+\section{Visual Design \& Tasks}
+
+\subsection{User Tasks}
+\begin{itemize}
+    \item \textbf{Sonic Exploration}: User can identify songs that sound similar based on spatial proximity rather than genre tags.
+    \item \textbf{Trend Analysis}: Observe how musical styles have evolved over decades by using the time range slider and observing the graphical visualizations. e.g.: the rise of high-energy electronic music)
+    \item \textbf{Cluster Characterization}: Understand what defines a specific genre group. Like for example, "Cluster 3 is high energy, high valence".
+\end{itemize}
+
+\subsection{Encodings \& Idioms}
+\begin{itemize}
+    \item \textbf{Position (3D Scatter)}: X, Y, Z map to PC1, PC2, PC3. The Proximate stars share similar audio fingerprints.
+    \item \textbf{Color (Hue)}: Encodes the K-Means Cluster, allowing distinct genre groups (e.g., "Acoustic Ballads" vs "Energetic Pop") to be visible instantly.
+    \item \textbf{Size}: Encodes \textit{Energy} in the 3D view. Larger stars are more energetic, adding a layer of depth and visual hierarchy.
+    \item \textbf{Bar Chart (Cluster Distribution)}: Uses \textbf{Length} to encode the count of songs per cluster, providing a summary of the current filtered selection. (top-right)
+    \item \textbf{Radar Chart (Audio Features)}: Uses \textbf{Radial Distance} to compare the normalized averages of 5 audio features (Danceability, Energy, Valence, etc.) for the visible data. (bottom-right)
+    \item \textbf{Line Chart (Temporal Evolution)}: Uses \textbf{Vertical Position} to encode average song duration and \textbf{Horizontal Position} for time (Year), revealing temporal trends.(bottom-left)
+    \item \textbf{Gloss/Bloom}: A post-processing "glow" effect is used to emphasizes dense clusters and create the "galaxy" type of aesthetic.
+\end{itemize}
+
+\subsection{Interaction Design}
+\begin{itemize}
+    \item \textbf{Navigation}: Orbit controls (Rotate/Zoom/Pan) resolve 3D occlusion issues.
+    \item \textbf{Coordinated Filtering}: A timeline slider filters the galaxy by year, updating all linked charts synchronously.
+    \item \textbf{Details-on-Demand}: Hovering over a star reveals metadata and highlights its position in the linked charts. And clicking on the star will stop the rotation for a few seconds or unless the user clicks anywhere else. 
+    \item \textbf{Toggle and Filter}: Users can toggle cluster on and off for the Radar chart using the cluster selection panel. The filtering via the time range slider updates all the linked charts in real-time.
+\end{itemize}
+
+\section{Novelty \& Complexity}
+\textbf{Novelty}: The "Spotify Galaxy" visualization departs from the traditional dashboards by using an immersive 3D star-field metaphor. Unlike standard dashboards, it is using a spatial metaphor, enhanced with bloom post-processing to emulate dense audio clusters. Music is not represented as a list, here, it is represented as a space to be traversed. It integrates multiple coordinated analytical views which includes cluster distribution, duration timeline and radar profiles. This visualization bridges the gap between "artistic" and "analytical" visualization.
+
+\textbf{Complexity}:
+\begin{itemize}
+    \item \textbf{Technical}: Rendering of 20k points at 60fps required \texttt{InstancedMesh} optimization in Three.js, rather than standard object creation.
+    \item \textbf{Synchronization}: State management was complex to ensure the 3D scene, timeline filter, and 2D charts remained perfectly in sync without lag.
+\end{itemize}
+
+It must be also noted that the cluster labels shown in the interface are descriptive names assigned post-hoc based on the centroid audio features. Thus, it should not be interpreted as strict genre definitions.
+
+\section{Critical Analysis}
+\textbf{Strengths}: The visualization is highly engaging and effectively unfolds the complex high-dimensional data. The clustering is visibly effective. Distinct clouds of color prove that the PCA/K-Means approach successfully grouped similar songs. Like the yellow cluster can be seen forming a well-separated island in PCA space, which suggests a unique high-energy audio signature. The overall representation looks aesthetic with interactivity. By looking at the average duration curve after the mid-2000s, we can interpret a clear structural drop reflecting modern shifts towards the shorter and optimized tracks for streaming.
+
+\textbf{Weaknesses}:
+\begin{itemize}
+    \item \textbf{Interpretation}: The PCA axes are abstract mathematical constructs, making it difficult for users to intuitively understand what "X" or "Y" specifically represents. Additionally, the K-Means clusters, while mathematically distinct, do not always map cleanly to familiar genre names.
+    \item \textbf{Occlusion}: Despite rotation, dense clusters in 3D can be hard to read. Like the turquoise and pink clusters occupy overlapping PCA regions at certain regions. This indicates two distinct audio-feature groupings sharing similar sonic properties but sometimes makes it hard for users to interpret from particular points or angles.
+    \\The Glow and bloom effects ,while aesthetic, reduce the precision of interpreting points in the dense areas.
+    \item \textbf{Future Work}: Future iterations could implement "axis explanation" tooltips that reveal which features dominate the current view.
+\end{itemize}
+
+\begin{thebibliography}{9}
+\bibitem{spotifydata} 
+Yamac Eren Ay. \textit{Spotify Dataset 1921--2020, 160k+ Tracks}. Kaggle, April 2021. \url{https://www.kaggle.com/datasets/yamaerenay/spotify-dataset-1921-2020-160k-tracks} 
+\bibitem{threejs} 
+Three.js. \textit{Three.js Documentation}. \url{https://threejs.org/docs/}
+\bibitem{munzner} 
+Tamara Munzner. \textit{Visualization Analysis and Design}. A K Peters/CRC Press, 2014. \url{https://www.crcpress.com/9781466508910}
+\end{thebibliography}
+
+\section*{Annexure}
+\small{
+I acknowledge the use of Co-pilot AI for summarising initial notes and proofreading the final draft.
+}
+
+\newpage
+\thispagestyle{empty}
+{
+\newgeometry{margin=0pt}
+\begin{figure}[t!]
+    \centering
+    \vspace*{-1cm}
+    \includegraphics[width=0.98\paperwidth, height=\paperheight, keepaspectratio]{spotify-galaxy-ss.png}
+    \vspace*{-1cm}    
+\end{figure}
+\restoregeometry
+}
+\clearpage
+\end{document}
